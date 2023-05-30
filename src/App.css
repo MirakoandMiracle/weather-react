@@ -1,38 +1,126 @@
-.App {
-  text-align: center;
+body {
+  background: radial-gradient(
+    circle at 10% 20%,
+    rgb(243, 94, 131) 17.1%,
+    rgb(236, 212, 80) 89.7%
+  );
+  font-family: "Roboto", sans-serif;
+  color: white;
+  font-weight: 340;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+h1 {
+  font-weight: 400;
+}
+.icon {
+  display: block;
+  margin: 0 auto;
+}
+.unitT {
+  font-size: 25px;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+ul {
+  font-size: 17px;
+  list-style: none;
+  line-height: 2;
+  margin: 0;
+  padding: 0;
+}
+li:first-letter {
+  text-transform: capitalize;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
+#wh {
+  font-size: 15px;
+  margin-right: 30px;
+  display: inline-block;
+}
+.footer {
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+  color: black;
+}
+
+.Search {
+  background-color: #f36183;
+  color: white;
+}
+.Search:hover {
+  background-color: #f0926d;
+}
+
+.btn-group-sm .btn {
+  padding: 0.2rem 0.4rem;
+  font-size: 10px;
+}
+.btn-group {
+  opacity: 0.6;
+}
+.temp {
+  font-size: 60px;
+}
+.weather-forecast {
+  text-align: center;
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.weather-forecast .next6days {
+  font-size: 18px;
+  font-weight: 400;
+}
+.forecastTemp {
+  font-size: 15px;
+  font-weight: 400;
+  margin-bottom: 20px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+.min {
+  opacity: 0.8;
+  margin-left: 8px;
+}
+
+.forecastimg {
+  width: 50px;
+}
+
+.ctn {
+  border: 1px solid #f36183;
+  background-color: #f3babc;
+  border-radius: 30px;
+  opacity: 0.8;
+  padding: 20px 0;
+  margin-bottom: 20px;
+}
+
+.source {
+  text-decoration: none;
+  color: white;
+}
+
+.source:hover {
+  color: #f36183;
+}
+@media (max-width: 390px) {
+  .country,
+  .UnitT,
+  #weather-condition,
+  #date,
+  .wind,
+  .weather-forecast .next6days,
+  .humidity,
+  .footer {
+    font-size: 13px;
   }
-  to {
-    transform: rotate(360deg);
+
+  .forecastTemp {
+    font-size: 10px;
+  }
+
+  #city {
+    font-size: 25px;
+  }
+
+  .temp {
+    font-size: 34px;
   }
 }
