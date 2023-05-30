@@ -18,7 +18,7 @@ export default function App() {
 
   useEffect(() => {
     getCurrentLocation();
-  }, []);
+  }, [getCurrentLocation]);
 
   function formatDate(timestamp) {
     let current = new Date(timestamp);
