@@ -16,10 +16,6 @@ export default function App() {
   let [unit, setUnit] = useState("");
   let [forecastData, setForecastData] = useState([]);
 
-  useEffect(() => {
-    getCurrentLocation();
-  }, [getCurrentLocation]);
-
   function formatDate(timestamp) {
     let current = new Date(timestamp);
     let hours = current.getHours();
@@ -109,15 +105,18 @@ export default function App() {
     axios.get(Url).then(DisplayAll);
   }
 
-  function getCurrentLocation() {
-    navigator.geolocation.getCurrentPosition((position) => {
-      let lat = position.coords.latitude;
-      let lon = position.coords.longitude;
-      let Apikey = "b3584c6545a2013b0440f785b9e39t5o";
-      let Url = `https://api.shecodes.io/weather/v1/current?lon=${lon}&lat=${lat}&key=${Apikey}&units=metric`;
-      axios.get(Url).then(DisplayAll);
-    });
-  }
+  useEffect(() => {
+    function getCurrentLocation() {
+      navigator.geolocation.getCurrentPosition((position) => {
+        let lat = position.coords.latitude;
+        let lon = position.coords.longitude;
+        let Apikey = "b3584c6545a2013b0440f785b9e39t5o";
+        let Url = `https://api.shecodes.io/weather/v1/current?lon=${lon}&lat=${lat}&key=${Apikey}&units=metric`;
+        axios.get(Url).then(DisplayAll);
+      });
+    }
+    getCurrentLocation();
+  });
 
   return (
     <div className="App">
