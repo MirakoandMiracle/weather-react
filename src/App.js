@@ -116,7 +116,7 @@ export default function App() {
       });
     }
     getCurrentLocation();
-  });
+  }, []);
 
   return (
     <div className="App">
