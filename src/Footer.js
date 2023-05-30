@@ -8,7 +8,7 @@ export default function Footer() {
         "
     >
       <a
-        href="https://github.com/MirakoandMiracle/My-weather-app"
+        href="https://github.com/MirakoandMiracle/weather-react"
         className="source"
         target="_blank"
         rel="noopener noreferrer"
