@@ -15,6 +15,8 @@ export default function App() {
   let [date, Setdate] = useState("");
   let [unit, setUnit] = useState("");
   let [forecastData, setForecastData] = useState([]);
+  let [userCoordinates, setUserCoordinates] = useState(null);
+  let [isLoading, setIsLoading] = useState(true);
 
   function formatDate(timestamp) {
     let current = new Date(timestamp);
@@ -104,23 +106,29 @@ export default function App() {
     let Url = `https://api.shecodes.io/weather/v1/current?query=${input}&key=${Apikey}&units=metric`;
     axios.get(Url).then(DisplayAll);
   }
-
   useEffect(() => {
-    function getCurrentLocation() {
+    if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition((position) => {
-        let lat = position.coords.latitude;
-        let lon = position.coords.longitude;
-        let Apikey = "b3584c6545a2013b0440f785b9e39t5o";
-        let Url = `https://api.shecodes.io/weather/v1/current?lon=${lon}&lat=${lat}&key=${Apikey}&units=metric`;
-        axios.get(Url).then(DisplayAll);
+        setUserCoordinates(position.coords);
       });
+    } else {
+      alert("Geolocation is not supported by this browser.");
     }
-    getCurrentLocation();
   }, []);
 
+  useEffect(() => {
+    if (userCoordinates) {
+      let Apikey = "b3584c6545a2013b0440f785b9e39t5o";
+
+      let Url = `https://api.shecodes.io/weather/v1/current?lat=${userCoordinates.latitude}&lon=${userCoordinates.longitude}&key=${Apikey}&units=metric`;
+      setIsLoading(true);
+      axios.get(Url).then(DisplayAll);
+      setIsLoading(false);
+    }
+  }, [userCoordinates]);
   return (
     <div className="App">
-      <div className="container p-4 mt-3">
+      <div className=" border container p-4 mt-3">
         <form className="d-flex" onSubmit={getCity}>
           <input
             className="form-control me-2"
@@ -133,54 +141,57 @@ export default function App() {
             Search
           </button>
         </form>
+        {isLoading ? (
+          <h1>loading....</h1>
+        ) : (
+          <div className="TodayWeather mt-3">
+            <div className="row">
+              <div className="col-7 mt-3">
+                <ul>
+                  <li className="country">
+                    <strong>{country}</strong>
+                  </li>
+                  <li>
+                    <h1 id="city">{city}</h1>
+                  </li>
+                  <li id="weather-condition">{description}</li>
+                  <li>
+                    <span id="date">{date}</span>
+                  </li>
+                </ul>
+              </div>
+              <div className="col-5">
+                <img
+                  src={icon}
+                  className="icon image-fluid"
+                  alt={description}
+                  id="imgT"
+                />
+                <div className="d-flex justify-content-center">
+                  <h1 className="temp">{temperature}</h1>
+                  <strong className="unitT">{unit}</strong>
+                </div>
+              </div>
+            </div>
 
-        <div className="TodayWeather mt-3">
-          <div className="row">
-            <div className="col-7 mt-3">
+            <div className="mt-2">
               <ul>
-                <li className="country">
-                  <strong>{country}</strong>
+                <li id="wh">
+                  <span className="wind">{Wind}</span>
                 </li>
-                <li>
-                  <h1 id="city">{city}</h1>
-                </li>
-                <li id="weather-condition">{description}</li>
-                <li>
-                  <span id="date">{date}</span>
+                <li id="wh">
+                  <span className="humidity">{humidity}</span>
                 </li>
               </ul>
             </div>
-            <div className="col-5">
-              <img
-                src={icon}
-                className="icon image-fluid"
-                alt={description}
-                id="imgT"
-              />
-              <div className="d-flex justify-content-center">
-                <h1 className="temp">{temperature}</h1>
-                <strong className="unitT">{unit}</strong>
-              </div>
+
+            <div className="weather-forecast mt-5">
+              <div className="row">{forecastData}</div>
             </div>
-          </div>
 
-          <div className="mt-2">
-            <ul>
-              <li id="wh">
-                <span className="wind">{Wind}</span>
-              </li>
-              <li id="wh">
-                <span className="humidity">{humidity}</span>
-              </li>
-            </ul>
+            <Footer />
           </div>
-
-          <div className="weather-forecast mt-5">
-            <div className="row">{forecastData}</div>
-          </div>
-
-          <Footer />
-        </div>
+        )}
       </div>
     </div>
   );
