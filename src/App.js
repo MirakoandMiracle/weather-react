@@ -119,12 +119,16 @@ export default function App() {
   useEffect(() => {
     if (userCoordinates) {
       let Apikey = "b3584c6545a2013b0440f785b9e39t5o";
-
       let Url = `https://api.shecodes.io/weather/v1/current?lat=${userCoordinates.latitude}&lon=${userCoordinates.longitude}&key=${Apikey}&units=metric`;
+
       setIsLoading(true);
-      axios.get(Url).then(DisplayAll);
-      setIsLoading(false);
+
+      axios.get(Url).then((response) => {
+        DisplayAll(response);
+        setIsLoading(false);
+      });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userCoordinates]);
   return (
     <div className="App">
